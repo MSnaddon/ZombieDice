@@ -6,7 +6,9 @@ package com.example.user.zombiedice;
 public enum Side {
     BRAIN("Brain"),
     FOOTSTEP("Footsteps"),
-    SHOTGUN("Shotgun");
+    SHOTGUN("Shotgun"),
+    DOUBLEBRAIN("Double Brain"),
+    DOUBLESHOTGUN("Souble Shotgun");
 
     private String value;
     Side(String v){

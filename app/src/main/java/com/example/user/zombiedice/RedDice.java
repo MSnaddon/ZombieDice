@@ -7,7 +7,7 @@ public class RedDice extends Dice {
 
     @Override
     public String getType(){
-        return "Strong";
+        return "Red";
     }
 
     @Override

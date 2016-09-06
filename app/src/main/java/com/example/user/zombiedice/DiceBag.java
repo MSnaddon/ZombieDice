@@ -4,24 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by user on 05/09/2016.
+ * Created by user on 06/09/2016.
  */
-public class DiceBag {
+public abstract class DiceBag {
 
-    private ArrayList<Dice> dice;
+    protected ArrayList<Dice> dice;
 
-    public DiceBag(){
+    protected DiceBag(){
         dice = new ArrayList<Dice>();
         genDice();
     }
 
-    public void genDice(){
-        dice.clear();
-        for (int i=0; i<3;i++){dice.add(new RedDice());}
-        for (int i=0; i<4;i++){dice.add(new YellowDice());}
-        for (int i=0; i<6;i++){dice.add(new GreenDice());}
-        Collections.shuffle(dice);
-    }
+    public abstract void genDice();
 
     public Dice getDie(){
         if (dice.size()<3){
@@ -46,5 +40,4 @@ public class DiceBag {
             }
         }
     }
-
 }

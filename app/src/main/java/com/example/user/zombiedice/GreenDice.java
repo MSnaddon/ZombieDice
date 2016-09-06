@@ -7,7 +7,7 @@ public class GreenDice extends Dice {
 
     @Override
     public String getType(){
-        return "Weak";
+        return "Green";
     }
 
     @Override

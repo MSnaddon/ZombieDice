@@ -3,11 +3,11 @@ package com.example.user.zombiedice;
 /**
  * Created by user on 06/09/2016.
  */
-public class BlackDice extends Dice {
+public class HulkDice extends Dice {
 
     @Override
     public String getType() {
-        return null;
+        return "Hulk";
     }
 
     @Override

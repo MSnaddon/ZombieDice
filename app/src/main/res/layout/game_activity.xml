@@ -42,14 +42,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Get Their Brains!"
+                android:text="@string/continue_turn"
                 android:id="@+id/continue_turn"
                 android:layout_alignParentLeft="true"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Let them be."
+                android:text="@string/end_turn_button"
                 android:id="@+id/end_turn"
                 android:layout_toRightOf="@+id/continue_turn"/>
         </RelativeLayout>
@@ -59,11 +59,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Previous Roll"/>
-        <TextView
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/previous_roll"/>
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/previous_roll1"
+                android:layout_toLeftOf="@+id/previous_roll2"
+                android:layout_toStartOf="@id/previous_roll2"
+                android:layout_margin="5dp"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+
+                android:id="@+id/previous_roll2"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/previous_roll3"
+                android:layout_toRightOf="@id/previous_roll2"
+                android:layout_toEndOf="@id/previous_roll2"
+                android:layout_margin="5dp"
+                android:textAlignment="center"/>
+        </RelativeLayout>
 
     </LinearLayout>
 
