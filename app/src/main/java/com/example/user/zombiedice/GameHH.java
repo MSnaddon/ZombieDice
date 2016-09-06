@@ -6,21 +6,15 @@ import java.util.HashMap;
 /**
  * Created by user on 06/09/2016.
  */
-public class HulkHottieGame extends Game {
+public class GameHH extends Game {
 
-    public HulkHottieGame(int numberOfPlayers){
+    public GameHH(int numberOfPlayers){
         super(numberOfPlayers);
+        diceBag = new DiceBagHH();
         initializeDiceAndCounters();
     }
 
-    public void removeScoreDice(){
-        // change to replace entries with dummys (null)
-        for (int i=2; i > -1; i--){
-            if (!(previousRollOutcome.get(i).equals(Side.FOOTSTEP))) {
-                playDice.set(i,null);
-            }
-        }
-    }
+
     public String getPreviousRollString(){
         String output = "";
         if (previousRollOutcome != null) {
@@ -48,7 +42,7 @@ public class HulkHottieGame extends Game {
         turnStats.put("Brain", brainCounter);
         turnStats.put("Footsteps", 3 - brainCounter - shotgunCounter);
         removeScoreDice();
-        baseDiceBag.dealToThree(playDice);
+        diceBag.dealToThree(playDice);
         return turnStats;
     }
     public boolean isNextRound(){
@@ -77,9 +71,9 @@ public class HulkHottieGame extends Game {
 
     //helper methods
     public void initializeDiceAndCounters(){
-        baseDiceBag.genDice();
+        diceBag.genDice();
         playDice.clear();
-        baseDiceBag.dealToThree(playDice);
+        diceBag.dealToThree(playDice);
         resetPointCounters();
     }
     public void resetPointCounters(){
@@ -100,10 +94,10 @@ public class HulkHottieGame extends Game {
 //    protected Player currentPlayer;
 //    protected int brainCounter;
 //    protected int shotgunCounter;
-//    protected BaseDiceBag baseDiceBag;
+//    protected DiceBagBase diceBagBase;
 //
 //    protected Game(int numberOfPlayers){
-//        baseDiceBag = new BaseDiceBag();
+//        diceBagBase = new DiceBagBase();
 //        playDice = new ArrayList<Dice>(3);
 //        players = new ArrayList<Player>();
 //        for (Integer i=0 ; i < numberOfPlayers;) {

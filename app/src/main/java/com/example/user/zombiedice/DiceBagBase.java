@@ -6,11 +6,10 @@ import java.util.Collections;
 /**
  * Created by user on 05/09/2016.
  */
-public class BaseDiceBag extends DiceBag {
+public class DiceBagBase extends DiceBag {
 
-    public BaseDiceBag(){
+    public DiceBagBase(){
         super();
-        ;
     }
 
     public void genDice(){
@@ -18,6 +17,9 @@ public class BaseDiceBag extends DiceBag {
         for (int i=0; i<3;i++){dice.add(new RedDice());}
         for (int i=0; i<4;i++){dice.add(new YellowDice());}
         for (int i=0; i<6;i++){dice.add(new GreenDice());}
+
+//      dice.add(new DemoDice());
+
         Collections.shuffle(dice);
     }
 

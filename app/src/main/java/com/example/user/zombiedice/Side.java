@@ -8,7 +8,7 @@ public enum Side {
     FOOTSTEP("Footsteps"),
     SHOTGUN("Shotgun"),
     DOUBLEBRAIN("Double Brain"),
-    DOUBLESHOTGUN("Souble Shotgun");
+    DOUBLESHOTGUN("Double Shotgun");
 
     private String value;
     Side(String v){
@@ -17,5 +17,4 @@ public enum Side {
     public String valueOf(){
         return this.value;
     }
-
 }

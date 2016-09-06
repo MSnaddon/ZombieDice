@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by user on 02/09/2016.
@@ -24,9 +23,7 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<TextView> mPreviousRolls;
     Button mContinueTurn;
     Button mEndTurn;
-    BaseGame baseGame;
-
-
+    GameBase gameBase;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,13 +32,14 @@ public class GameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         int playerNum = extras.getInt("NumberOfPlayers");
         Log.d("GameActivity","Number of players " + ((Integer)playerNum).toString());
-        baseGame = new BaseGame(playerNum);
+        gameBase = new GameBase(playerNum);
 
         mPlayerName = (TextView)findViewById(R.id.player_name);
         mTurnScoreBox = (TextView)findViewById(R.id.turn_score_box);
         mCurrentDice = (TextView)findViewById((R.id.current_dice));
         mContinueTurn = (Button)findViewById(R.id.continue_turn);
         mEndTurn = (Button)findViewById(R.id.end_turn);
+
         mPreviousRolls = new ArrayList<TextView>();
         mPreviousRolls.add((TextView)findViewById(R.id.previous_roll1));
         mPreviousRolls.add((TextView)findViewById(R.id.previous_roll2));
@@ -54,9 +52,9 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                baseGame.playSubTurn();
-                if (baseGame.getShotgunCounter() > 2) {
-                    Toast.makeText(GameActivity.this, "You have been shot " + ((Integer) baseGame.getShotgunCounter()).toString() + " times", Toast.LENGTH_SHORT).show();
+                gameBase.playSubTurn();
+                if (gameBase.getShotgunCounter() > 2) {
+                    Toast.makeText(GameActivity.this, "You have been shot " + ((Integer) gameBase.getShotgunCounter()).toString() + " times", Toast.LENGTH_SHORT).show();
                     checkForNextTurn();
                     clearPreviousRolls();
                 }else{
@@ -74,7 +72,7 @@ public class GameActivity extends AppCompatActivity {
                 //check to see if game is over.
                 checkForNextTurn();
                 setupPage();
-                Toast.makeText(GameActivity.this, "They live... for now", Toast.LENGTH_SHORT);
+                Toast.makeText(GameActivity.this, "They live... for now", Toast.LENGTH_SHORT).show();
                 clearPreviousRolls();
             }
         });
@@ -94,9 +92,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void displayPreviousRolls() {
         int index = 0;
-        for (Dice dice : baseGame.getPreviousDice()) {
+        for (Dice dice : gameBase.getPreviousDice()) {
             TextView view = mPreviousRolls.get(index);
-            Side outcome = baseGame.getPreviousOutcome().get(index);
+            Side outcome = gameBase.getPreviousOutcome().get(index);
             setColour(view, dice);
             String outputText = dice.getType() + "\n" + outcome.valueOf();
             view.setText(outputText);
@@ -110,14 +108,14 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupPage(){
 
-        String playerAndScore = baseGame.getCurrentPlayer().getName() + "                Score: " + ((Integer) baseGame.getCurrentPlayer().getScore()).toString();
+        String playerAndScore = gameBase.getCurrentPlayer().getName() + "                Score: " + ((Integer) gameBase.getCurrentPlayer().getScore()).toString();
         mPlayerName.setText(playerAndScore);
 
-        String scoreBoxText = "Brains :" + ((Integer) baseGame.getBrainCounter()).toString() + " Shotguns: " + ((Integer) baseGame.getShotgunCounter()).toString();
+        String scoreBoxText = "Brains :" + ((Integer) gameBase.getBrainCounter()).toString() + " Shotguns: " + ((Integer) gameBase.getShotgunCounter()).toString();
         mTurnScoreBox.setText(scoreBoxText);
 
         String currentDiceString = "";
-        for (Dice dice : baseGame.getDice()) {
+        for (Dice dice : gameBase.getDice()) {
             currentDiceString += dice.getType() + "  ";
         }
         mCurrentDice.setText(currentDiceString);
@@ -125,15 +123,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void checkForNextTurn(){
-        boolean nextRound = baseGame.isNextRound();
+        boolean nextRound = gameBase.isNextRound();
         //if game is over, go to game over activity
         if (!nextRound){
             Intent intent = new Intent(GameActivity.this, GameFinishedActivity.class);
             int index = 0;
-            int arraySize = baseGame.getPlayers().size();
+            int arraySize = gameBase.getPlayers().size();
             String[] playerNames = new String[arraySize];
             int[] playerScores = new int[arraySize];
-            for (Player player : baseGame.getStandings()) {
+            for (Player player : gameBase.getStandings()) {
                 playerScores[index] = player.getScore();
                 playerNames[index] = player.getName();
                 index ++;

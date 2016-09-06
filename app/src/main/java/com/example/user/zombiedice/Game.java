@@ -16,10 +16,9 @@ public abstract class Game {
     protected Player currentPlayer;
     protected int brainCounter;
     protected int shotgunCounter;
-    protected BaseDiceBag baseDiceBag;
+    protected DiceBag diceBag;
 
     protected Game(int numberOfPlayers){
-        baseDiceBag = new BaseDiceBag();
         playDice = new ArrayList<Dice>(3);
         players = new ArrayList<Player>();
         for (Integer i=0 ; i < numberOfPlayers;) {
@@ -58,12 +57,63 @@ public abstract class Game {
         return this.previousRollOutcome;
     }
 
+
+    // Functional methods
+    public boolean isNextRound(){
+        // adding score if not dead
+        if (shotgunCounter <3){
+            currentPlayer.addToScore(brainCounter);
+        }
+
+        // Set up for next player
+        initializeDiceAndCounters();
+        turnCounter ++;
+        currentPlayer = players.get( turnCounter%players.size() );
+
+        // checking if the game is over (can refactor to instance variable if want to)
+        boolean nextRound = true;
+        if (turnCounter%players.size() == 0) {
+            for (Player player : players){
+                if (player.getScore()>12){
+                    nextRound = false;
+                    break;
+                }
+            }
+        }
+        return nextRound;
+    }
+
     //pseudo Getters
     public ArrayList<Player> getStandings(){
         ArrayList<Player> sortedPlayers = new ArrayList<>(players);
         Collections.sort(sortedPlayers);
         return sortedPlayers;
     }
+
+    //Generic Helper Methods
+    public void removeScoreDice(){
+        // change to replace entries with dummys (null)
+        for (int i=2; i > -1; i--){
+            if (!(previousRollOutcome.get(i).equals(Side.FOOTSTEP))) {
+                playDice.set(i,null);
+            }
+        }
+    }
+    public void clearPrevious(){
+        previousDice.clear();
+        previousRollOutcome.clear();
+    }
+    public void initializeDiceAndCounters(){
+        diceBag.genDice();
+        playDice.clear();
+        diceBag.dealToThree(playDice);
+        resetPointCounters();
+    }
+    public void resetPointCounters(){
+        this.brainCounter = 0;
+        this.shotgunCounter = 0;
+    }
+
 
 
 }
