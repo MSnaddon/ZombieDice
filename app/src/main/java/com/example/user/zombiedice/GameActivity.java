@@ -51,7 +51,6 @@ public class GameActivity extends AppCompatActivity {
         mContinueTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 gameBase.playSubTurn();
                 if (gameBase.getShotgunCounter() > 2) {
                     Toast.makeText(GameActivity.this, "You have been shot " + ((Integer) gameBase.getShotgunCounter()).toString() + " times", Toast.LENGTH_SHORT).show();

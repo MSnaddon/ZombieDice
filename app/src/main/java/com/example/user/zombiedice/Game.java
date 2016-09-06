@@ -109,11 +109,8 @@ public abstract class Game {
         diceBag.dealToThree(playDice);
         resetPointCounters();
     }
-    public void resetPointCounters(){
-        this.brainCounter = 0;
-        this.shotgunCounter = 0;
-    }
 
+    public abstract void resetPointCounters();
 
 
 }

@@ -8,35 +8,65 @@ import java.util.HashMap;
  */
 public class GameBase extends Game {
 
+    boolean hunkBrain;
+    boolean hottieBrain;
 
 
     public GameBase(int numberOfPlayers){
         super(numberOfPlayers);
         diceBag = new DiceBagBase();
         initializeDiceAndCounters();
+
     }
 
-    public HashMap playSubTurn(){
-        clearPrevious();
-        HashMap turnStats = new HashMap();
+    public void playerRollDice() {
         ArrayList<Side> outcome = currentPlayer.rollDice(playDice);
-        for (Side side : outcome){
+        for (Side side : outcome) {
             previousRollOutcome.add(side); //Make clone of outcomes
-            switch (side){
-                case SHOTGUN: shotgunCounter ++;
+            switch (side) {
+                case SHOTGUN:
+                    shotgunCounter++;
                     break;
-                case BRAIN: brainCounter ++;
+                case BRAIN:
+                    brainCounter++;
+                    break;
+                case DOUBLEBRAIN:
+                    brainCounter += 2;
+                    break;
+                case DOUBLESHOTGUN:
+                    shotgunCounter += 2;
                     break;
             }
         }
+    }
+
+    public HashMap playSubTurn(){
+        //update previous dice with current
+        clearPrevious();
+        previousDice = (ArrayList<Dice>)playDice.clone();
+
+        //player rolls dice (outcomes saved)
+        playerRollDice();
+
+
+        // Hottie hunk logic
+
+
+        //generate output info
+        HashMap turnStats = new HashMap();
         turnStats.put("Shotgun", shotgunCounter);
         turnStats.put("Brain", brainCounter);
-        turnStats.put("Footsteps", 3 - brainCounter - shotgunCounter);
-        previousDice = (ArrayList<Dice>)playDice.clone(); //Make clone of outcomes
+
+        //sorting dice
         removeScoreDice();
         diceBag.dealToThree(playDice);
+
         return turnStats;
     }
 
+    public void resetPointCounters(){
+        this.brainCounter = 0;
+        this.shotgunCounter = 0;
+    }
 
 }
