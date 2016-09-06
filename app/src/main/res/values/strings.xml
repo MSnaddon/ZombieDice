@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Zombie Dice</string>
+    <string name="title_activity_label">Zombie dice</string>
+    <string name="start_button">BRAINS!!</string>
+</resources>
