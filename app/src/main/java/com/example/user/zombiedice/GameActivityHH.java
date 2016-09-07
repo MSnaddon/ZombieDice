@@ -2,12 +2,14 @@ package com.example.user.zombiedice;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,29 +24,35 @@ public class GameActivityHH extends AppCompatActivity {
     TextView mTurnScoreBox;
     TextView mCurrentDice;
     ArrayList<TextView> mPreviousRolls;
+    ArrayList<ImageView> mPreviousRollsImage;
     Button mContinueTurn;
     Button mEndTurn;
     GameHH gameHH;
 
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
 
         Bundle extras = getIntent().getExtras();
         int playerNum = extras.getInt("NumberOfPlayers");
-        Log.d("GameActivity","Number of players " + ((Integer)playerNum).toString());
+        Log.d("GameActivity", "Number of players " + ((Integer) playerNum).toString());
         gameHH = new GameHH(playerNum);
 
-        mPlayerName = (TextView)findViewById(R.id.player_name);
-        mTurnScoreBox = (TextView)findViewById(R.id.turn_score_box);
-        mCurrentDice = (TextView)findViewById((R.id.current_dice));
-        mContinueTurn = (Button)findViewById(R.id.continue_turn);
-        mEndTurn = (Button)findViewById(R.id.end_turn);
+        mPlayerName = (TextView) findViewById(R.id.player_name);
+        mTurnScoreBox = (TextView) findViewById(R.id.turn_score_box);
+        mCurrentDice = (TextView) findViewById((R.id.current_dice));
+        mContinueTurn = (Button) findViewById(R.id.continue_turn);
+        mEndTurn = (Button) findViewById(R.id.end_turn);
 
         mPreviousRolls = new ArrayList<TextView>();
-        mPreviousRolls.add((TextView)findViewById(R.id.previous_roll1));
-        mPreviousRolls.add((TextView)findViewById(R.id.previous_roll2));
-        mPreviousRolls.add((TextView)findViewById(R.id.previous_roll3));
+        mPreviousRolls.add((TextView) findViewById(R.id.previous_roll1));
+        mPreviousRolls.add((TextView) findViewById(R.id.previous_roll2));
+        mPreviousRolls.add((TextView) findViewById(R.id.previous_roll3));
+
+        mPreviousRollsImage = new ArrayList<ImageView>();
+        mPreviousRollsImage.add((ImageView) findViewById(R.id.result1));
+        mPreviousRollsImage.add((ImageView) findViewById(R.id.result2));
+        mPreviousRollsImage.add((ImageView) findViewById(R.id.result3));
 
         // Initial Page setup
         setupPage();
@@ -54,12 +62,12 @@ public class GameActivityHH extends AppCompatActivity {
             public void onClick(View view) {
                 gameHH.playSubTurn();
                 if (gameHH.getShotgunCounter() > 2) {
-                    MediaPlayer mp = MediaPlayer.create(GameActivityHH.this,R.raw.shot_dead);
+                    MediaPlayer mp = MediaPlayer.create(GameActivityHH.this, R.raw.shot_dead);
                     mp.start();
                     Toast.makeText(GameActivityHH.this, "You have been shot " + ((Integer) gameHH.getShotgunCounter()).toString() + " times", Toast.LENGTH_SHORT).show();
                     checkForNextTurn();
                     clearPreviousRolls();
-                }else{
+                } else {
                     displayPreviousRolls();
                 }
 
@@ -67,11 +75,11 @@ public class GameActivityHH extends AppCompatActivity {
             }
         });
 
-        mEndTurn.setOnClickListener(new View.OnClickListener(){
+        mEndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                MediaPlayer mp =  MediaPlayer.create(GameActivityHH.this,R.raw.nom_nom_nom);
+                MediaPlayer mp = MediaPlayer.create(GameActivityHH.this, R.raw.nom_nom_nom);
                 mp.start();
 
                 //check to see if game is over.
@@ -83,42 +91,35 @@ public class GameActivityHH extends AppCompatActivity {
         });
     }
 
-    private void setColour(TextView view, Dice dice){
-        switch (dice.getType()) {
-            case "Red": view.setTextColor(Color.RED);
-                return;
-            case "Yellow": view.setTextColor(0xffbdbd00);
-                return;
-            case "Green":view.setTextColor(0xff00bb00);
-                return;
-        }
-        //for HH game
-        switch(dice.getType()){
-            case "Hottie": view.setTextColor(0xffdf61da);
-                return;
-            case "Hunk": view.setTextColor(0xff835f09);
-                return;
-        }
 
-    }
+
 
     private void displayPreviousRolls() {
         int index = 0;
         for (Dice dice : gameHH.getPreviousDice()) {
             TextView view = mPreviousRolls.get(index);
+            ImageView imageView = mPreviousRollsImage.get(index);
             Side outcome = gameHH.getPreviousOutcome().get(index);
             setColour(view, dice);
+            setDiceImages(imageView, dice, outcome);
+
             String outputText = dice.getType() + "\n" + outcome.valueOf();
             view.setText(outputText);
             index++;
         }
     }
 
-    private void clearPreviousRolls(){
-        for (TextView view : mPreviousRolls){view.setText("");}
+    private void clearPreviousRolls() {
+        for (TextView view : mPreviousRolls) {
+            view.setText("");
+        }
+        for (ImageView view : mPreviousRollsImage) {
+            view.setImageResource(R.drawable.red_brain);
+        }
     }
 
-    private void setupPage(){
+
+    private void setupPage() {
 
         String playerAndScore = gameHH.getCurrentPlayer().getName() + "                Score: " + ((Integer) gameHH.getCurrentPlayer().getScore()).toString();
         mPlayerName.setText(playerAndScore);
@@ -134,10 +135,10 @@ public class GameActivityHH extends AppCompatActivity {
         // end of page setup
     }
 
-    public void checkForNextTurn(){
+    public void checkForNextTurn() {
         boolean nextRound = gameHH.isNextRound();
         //if game is over, go to game over activity
-        if (!nextRound){
+        if (!nextRound) {
             Intent intent = new Intent(GameActivityHH.this, GameFinishedActivity.class);
             int index = 0;
             int arraySize = gameHH.getPlayers().size();
@@ -146,11 +147,124 @@ public class GameActivityHH extends AppCompatActivity {
             for (Player player : gameHH.getStandings()) {
                 playerScores[index] = player.getScore();
                 playerNames[index] = player.getName();
-                index ++;
+                index++;
             }
             intent.putExtra("Players", playerNames);
             intent.putExtra("Scores", playerScores);
             startActivity(intent);
+        }
+    }
+
+    private void setColour(TextView view, Dice dice) {
+        switch (dice.getType()) {
+            case "Red":
+                view.setTextColor(Color.RED);
+                return;
+            case "Yellow":
+                view.setTextColor(0xffbdbd00);
+                return;
+            case "Green":
+                view.setTextColor(0xff00bb00);
+                return;
+        }
+        //for HH game
+        switch (dice.getType()) {
+            case "Hottie":
+                view.setTextColor(0xffdf61da);
+                return;
+            case "Hunk":
+                view.setTextColor(0xff835f09);
+        }
+    }
+
+    //Could refactor to use concatinated strings and resource finder
+    private void setDiceImages(ImageView view, Dice dice, Side side){
+        String type = dice.getType();
+        switch (type) {
+            case "Green": {
+                switch (side) {
+                    case BRAIN: {
+                        view.setImageResource(R.drawable.green_brain);
+                        return;
+                    }
+                    case SHOTGUN: {
+                        view.setImageResource(R.drawable.green_shotgun);
+                        return;
+                    }
+                    case FOOTSTEP: {
+                        view.setImageResource(R.drawable.green_footsteps);
+                        return;
+                    }
+                }
+            }
+            case "Yellow": {
+                switch (side) {
+                    case BRAIN: {
+                        view.setImageResource(R.drawable.yellow_brain);
+                        return;
+                    }
+                    case SHOTGUN: {
+                        view.setImageResource(R.drawable.yellow_shotgun);
+                        return;
+                    }
+                    case FOOTSTEP: {
+                        view.setImageResource(R.drawable.yellow_footsteps);
+                        return;
+                    }
+                }
+            }
+            case "Red": {
+                switch (side) {
+                    case BRAIN: {
+                        view.setImageResource(R.drawable.red_brain);
+                        return;
+                    }
+                    case SHOTGUN: {
+                        view.setImageResource(R.drawable.red_shotgun);
+                        return;
+                    }
+                    case FOOTSTEP: {
+                        view.setImageResource(R.drawable.red_footsteps);
+                        return;
+                    }
+                }
+            }
+            case "Hunk": {
+                switch (side) {
+                    case DOUBLEBRAIN: {
+                        view.setImageResource(R.drawable.hunk_doublebrain);
+                        return;
+                    }
+                    case SHOTGUN: {
+                        view.setImageResource(R.drawable.hunk_shotgun);
+                        return;
+                    }
+                    case DOUBLESHOTGUN: {
+                        view.setImageResource(R.drawable.hunk_doubleshotgun);
+                        return;
+                    }
+                    case FOOTSTEP: {
+                        view.setImageResource(R.drawable.hunk_footsteps);
+                        return;
+                    }
+                }
+            }
+            case "Hottie": {
+                switch (side) {
+                    case BRAIN: {
+                        view.setImageResource(R.drawable.hottie_brain);
+                        return;
+                    }
+                    case SHOTGUN: {
+                        view.setImageResource(R.drawable.hottie_shotgun);
+                        return;
+                    }
+                    case FOOTSTEP: {
+                        view.setImageResource(R.drawable.hottie_footsteps);
+                        return;
+                    }
+                }
+            }
         }
     }
 }

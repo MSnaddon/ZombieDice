@@ -14,8 +14,8 @@ public class DiceBagHH extends DiceBag {
     @Override
     public void genDice() {
         dice.clear();
-        for (int i = 0; i<2; i++){dice.add(new RedDice());}
-        for (int i = 0; i<3; i++){dice.add(new YellowDice());}
+        for (int i = 0; i<1; i++){dice.add(new RedDice());}
+        for (int i = 0; i<4; i++){dice.add(new YellowDice());}
         for (int i = 0; i<6; i++){dice.add(new GreenDice());}
         Collections.shuffle(dice);
     }

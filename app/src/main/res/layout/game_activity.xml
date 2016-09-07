@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginTop="30dp"
-            android:text = "Yellow : Yellow : Yellow"
+            android:text = "Dice Dice Dice"
             android:id="@+id/current_dice" />
 
         <RelativeLayout
@@ -64,36 +64,71 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:id="@+id/result1"
+                android:layout_toStartOf="@+id/result2"
+                android:layout_toLeftOf="@+id/result2"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:id="@+id/result2"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:id="@+id/result3"
+                android:layout_toEndOf="@+id/result2"
+                android:layout_toRightOf="@+id/result2" />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="75dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/previous_roll1"
                 android:layout_toLeftOf="@+id/previous_roll2"
                 android:layout_toStartOf="@id/previous_roll2"
-                android:layout_margin="5dp"
                 android:textAlignment="center"/>
             <TextView
                 android:layout_width="wrap_content"
+                android:minWidth="75dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
 
                 android:id="@+id/previous_roll2"
                 android:layout_centerInParent="true"
-                android:layout_margin="5dp"
                 android:textAlignment="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="75dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/previous_roll3"
                 android:layout_toRightOf="@id/previous_roll2"
                 android:layout_toEndOf="@id/previous_roll2"
-                android:layout_margin="5dp"
                 android:textAlignment="center"/>
         </RelativeLayout>
+
 
     </LinearLayout>
 

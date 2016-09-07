@@ -17,12 +17,6 @@ public class DiceBagBase extends DiceBag {
         for (int i=0; i<3;i++){dice.add(new RedDice());}
         for (int i=0; i<4;i++){dice.add(new YellowDice());}
         for (int i=0; i<6;i++){dice.add(new GreenDice());}
-
-//      dice.add(new DemoDice());
-
         Collections.shuffle(dice);
     }
-
-
-
 }

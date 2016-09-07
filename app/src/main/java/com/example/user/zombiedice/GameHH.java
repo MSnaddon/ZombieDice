@@ -13,9 +13,7 @@ public class GameHH extends Game {
 
     private boolean hunkBrain;
     private boolean hottieBrain;
-    private boolean hunkShotgunned;
-    private boolean hottieShotgunned;
-    private boolean hunkHottieShotgunned;
+//    private boolean hunkHottieShotgunned;
 
     DiceBagHH diceBag;
 
@@ -27,29 +25,23 @@ public class GameHH extends Game {
         hottieHunkSaved();
     }
 
-    public boolean[] hasShotgunned(){
-
-
-        return new boolean[2];
-    }
-
     public void playerRollDice() {
         ArrayList<Side> outcome = currentPlayer.rollDice(playDice);
         int index = 0;
         for (Side side : outcome) {
             previousRollOutcome.add(side);
             String correspondingDiceType = playDice.get(index).getType();
-
             // adjusting counters
+            //should refactor to account for hunk/hottie shotgunning (much better that way)
             switch (side) {
                 case SHOTGUN:
-                    if (correspondingDiceType.equals("Hottie")){
-                        hottieShotgunned = true;
-                        hunkHottieShotgunned = true;
+                    if (correspondingDiceType.equals("Hottie") && hunkBrain){
+                        hunkBrain = false;
+                        brainCounter -= 2;
                     }
-                    if(correspondingDiceType.equals("Hunk")){
-                        hunkShotgunned = true;
-                        hunkHottieShotgunned = true;
+                    if(correspondingDiceType.equals("Hunk") && hottieBrain){
+                        hottieBrain = false;
+                        brainCounter --;
                     }
                     shotgunCounter++;
                     break;
@@ -64,7 +56,7 @@ public class GameHH extends Game {
                     brainCounter += 2;
                     break;
                 case DOUBLESHOTGUN:
-                    hunkHottieShotgunned = true;
+                    if (hottieBrain){brainCounter --;}
                     shotgunCounter += 2;
                     break;
             }
@@ -80,20 +72,12 @@ public class GameHH extends Game {
         //player rolls dice (outcomes saved)
         playerRollDice();
 
-        Log.d("GameHH", "The brain counter was " + ((Integer) brainCounter).toString());
-        //Hottie Hunk Logic
-        if (hunkHottieShotgunned && hottieBrain || hunkBrain){
-            Log.d("GameHH", "Condition has passed");
-            if (hunkBrain){brainCounter -= 2; Log.d("GameHH","Hunk rescued");}
-            if (hottieBrain){brainCounter --;Log.d("GameHH","Hottie rescued");}
-            hottieHunkSaved();
-        }
 
-        Log.d("GameHH", "The brain counter is " + ((Integer) brainCounter).toString());
-        Log.d("GameHH", "Hottie is " + hottieBrain + "| Hunky is " + hunkBrain);
-        Log.d("GameHH", "Shotgun stuff is " + hunkHottieShotgunned);
-
-        hunkHottieShotgunned = false;
+//        //Hottie Hunk Logic
+//        Log.d("GameHH", "The brain counter is " + ((Integer) brainCounter).toString());
+//        Log.d("GameHH", "Hottie is " + hottieBrain + "| Hunky is " + hunkBrain);
+//        Log.d("GameHH", "Hunk or hottie has shotgun " + hunkHottieShotgunned);
+//        hunkHottieShotgunned = false;
 
         //generate output info
         HashMap turnStats = new HashMap();
