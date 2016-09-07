@@ -21,6 +21,12 @@
             android:name=".GameActivity"
             android:label="Get the brains!">
         </activity>
+
+        <activity
+            android:name=".GameActivityHH"
+            android:label="Get the brains!">
+        </activity>
+
         <activity
             android:name=".GameFinishedActivity"
             android:label="Game Over">

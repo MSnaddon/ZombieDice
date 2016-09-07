@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/">
 
     <LinearLayout
         android:layout_width="422dp"
@@ -12,7 +13,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/splashImage" />
+            android:id="@+id/splashImage"
+            android:src="@drawable/splash"/>
     </LinearLayout>
 
     <LinearLayout
@@ -29,10 +31,26 @@
             android:id="@+id/numberOfPlayers"
             android:hint="How many players?"/>
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center">
+
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/submitPlayers"
-            android:text="@string/start_button"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/start_vanilla"
+            android:text="@string/start_vanilla"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_expansion"
+            android:id="@+id/start_expansion"
+            android:layout_toEndOf="@id/start_vanilla"
+            android:layout_toRightOf="@id/start_vanilla"/>
+    </RelativeLayout>
 </LinearLayout>

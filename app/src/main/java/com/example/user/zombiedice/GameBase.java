@@ -8,9 +8,7 @@ import java.util.HashMap;
  */
 public class GameBase extends Game {
 
-    boolean hunkBrain;
-    boolean hottieBrain;
-
+    DiceBag diceBag;
 
     public GameBase(int numberOfPlayers){
         super(numberOfPlayers);
@@ -30,19 +28,13 @@ public class GameBase extends Game {
                 case BRAIN:
                     brainCounter++;
                     break;
-                case DOUBLEBRAIN:
-                    brainCounter += 2;
-                    break;
-                case DOUBLESHOTGUN:
-                    shotgunCounter += 2;
-                    break;
             }
         }
     }
 
     public HashMap playSubTurn(){
         //update previous dice with current
-        clearPrevious();
+        clearPreviousDice();
         previousDice = (ArrayList<Dice>)playDice.clone();
 
         //player rolls dice (outcomes saved)
@@ -69,4 +61,11 @@ public class GameBase extends Game {
         this.shotgunCounter = 0;
     }
 
+    public void initializeDiceAndCounters(){
+        diceBag.genDice();
+        playDice.clear();
+        diceBag.dealToThree(playDice);
+        resetPointCounters();
+    }
 }
+

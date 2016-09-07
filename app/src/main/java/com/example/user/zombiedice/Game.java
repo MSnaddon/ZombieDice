@@ -16,7 +16,7 @@ public abstract class Game {
     protected Player currentPlayer;
     protected int brainCounter;
     protected int shotgunCounter;
-    protected DiceBag diceBag;
+
 
     protected Game(int numberOfPlayers){
         playDice = new ArrayList<Dice>(3);
@@ -61,15 +61,13 @@ public abstract class Game {
     // Functional methods
     public boolean isNextRound(){
         // adding score if not dead
-        if (shotgunCounter <3){
+        if (shotgunCounter < 3){
             currentPlayer.addToScore(brainCounter);
         }
-
         // Set up for next player
         initializeDiceAndCounters();
         turnCounter ++;
         currentPlayer = players.get( turnCounter%players.size() );
-
         // checking if the game is over (can refactor to instance variable if want to)
         boolean nextRound = true;
         if (turnCounter%players.size() == 0) {
@@ -99,18 +97,10 @@ public abstract class Game {
             }
         }
     }
-    public void clearPrevious(){
+    public void clearPreviousDice(){
         previousDice.clear();
         previousRollOutcome.clear();
     }
-    public void initializeDiceAndCounters(){
-        diceBag.genDice();
-        playDice.clear();
-        diceBag.dealToThree(playDice);
-        resetPointCounters();
-    }
-
     public abstract void resetPointCounters();
-
-
+    public abstract void initializeDiceAndCounters();
 }
