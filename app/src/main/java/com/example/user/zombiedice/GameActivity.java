@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +20,12 @@ import java.util.ArrayList;
 public class GameActivity extends AppCompatActivity {
 
     TextView mPlayerName;
+    TextView mTotalScore;
     TextView mTurnScoreBox;
     TextView mCurrentDice;
+    ImageView mImageView1;
+    ImageView mImageView2;
+    ImageView mImageView3;
     ArrayList<TextView> mPreviousRolls;
     Button mContinueTurn;
     Button mEndTurn;
@@ -36,10 +41,18 @@ public class GameActivity extends AppCompatActivity {
         gameBase = new GameBase(playerNum);
 
         mPlayerName = (TextView)findViewById(R.id.player_name);
+        mTotalScore = (TextView)findViewById(R.id.player_score);
         mTurnScoreBox = (TextView)findViewById(R.id.turn_score_box);
         mCurrentDice = (TextView)findViewById((R.id.current_dice));
         mContinueTurn = (Button)findViewById(R.id.continue_turn);
         mEndTurn = (Button)findViewById(R.id.end_turn);
+
+        mImageView1 = (ImageView)findViewById(R.id.result1);
+        mImageView2 = (ImageView)findViewById(R.id.result2);
+        mImageView3 = (ImageView)findViewById(R.id.result3);
+        mImageView1.setVisibility(View.GONE);
+        mImageView2.setVisibility(View.GONE);
+        mImageView3.setVisibility(View.GONE);
 
         mPreviousRolls = new ArrayList<TextView>();
         mPreviousRolls.add((TextView)findViewById(R.id.previous_roll1));
@@ -114,8 +127,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupPage(){
 
-        String playerAndScore = gameBase.getCurrentPlayer().getName() + "                Score: " + ((Integer) gameBase.getCurrentPlayer().getScore()).toString();
-        mPlayerName.setText(playerAndScore);
+        String player = gameBase.getCurrentPlayer().getName();
+        mPlayerName.setText(player);
+
+        String score = "Total Score\n" + ((Integer)gameBase.getCurrentPlayer().getScore()).toString();
+        mTotalScore.setText(score);
 
         String scoreBoxText = "Brains :" + ((Integer) gameBase.getBrainCounter()).toString() + " Shotguns: " + ((Integer) gameBase.getShotgunCounter()).toString();
         mTurnScoreBox.setText(scoreBoxText);

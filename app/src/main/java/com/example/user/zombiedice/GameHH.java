@@ -24,7 +24,6 @@ public class GameHH extends Game {
         initializeDiceAndCounters();
         hottieHunkSaved();
     }
-
     public void playerRollDice() {
         ArrayList<Side> outcome = currentPlayer.rollDice(playDice);
         int index = 0;
@@ -63,7 +62,6 @@ public class GameHH extends Game {
             index ++;
         }
     }
-
     public HashMap playSubTurn(){
         //update previous dice with current
         clearPreviousDice();
@@ -90,7 +88,6 @@ public class GameHH extends Game {
 
         return turnStats;
     }
-
     public void resetPointCounters(){
         this.brainCounter = 0;
         this.shotgunCounter = 0;
@@ -104,17 +101,10 @@ public class GameHH extends Game {
         diceBag.dealToThree(playDice);
         resetPointCounters();
     }
-
     public void hottieHunkSaved(){
         Log.d("GameHH", "Heroes Saved");
         this.hottieBrain = false;
         this.hunkBrain = false;
         this.diceBag.placeHunkAndHottie();
     }
-
-
-
-
-
-
 }

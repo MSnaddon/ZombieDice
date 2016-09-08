@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class GameActivityHH extends AppCompatActivity {
 
     TextView mPlayerName;
+    TextView mTotalScore;
     TextView mTurnScoreBox;
     TextView mCurrentDice;
     ArrayList<TextView> mPreviousRolls;
@@ -39,6 +40,7 @@ public class GameActivityHH extends AppCompatActivity {
         gameHH = new GameHH(playerNum);
 
         mPlayerName = (TextView) findViewById(R.id.player_name);
+        mTotalScore = (TextView)findViewById(R.id.player_score);
         mTurnScoreBox = (TextView) findViewById(R.id.turn_score_box);
         mCurrentDice = (TextView) findViewById((R.id.current_dice));
         mContinueTurn = (Button) findViewById(R.id.continue_turn);
@@ -91,9 +93,6 @@ public class GameActivityHH extends AppCompatActivity {
         });
     }
 
-
-
-
     private void displayPreviousRolls() {
         int index = 0;
         for (Dice dice : gameHH.getPreviousDice()) {
@@ -114,15 +113,17 @@ public class GameActivityHH extends AppCompatActivity {
             view.setText("");
         }
         for (ImageView view : mPreviousRollsImage) {
-            view.setImageResource(R.drawable.red_brain);
+            view.setImageResource(R.drawable.placeholder);
         }
     }
 
-
     private void setupPage() {
 
-        String playerAndScore = gameHH.getCurrentPlayer().getName() + "                Score: " + ((Integer) gameHH.getCurrentPlayer().getScore()).toString();
-        mPlayerName.setText(playerAndScore);
+        String player = gameHH.getCurrentPlayer().getName();
+        mPlayerName.setText(player);
+
+        String score = "Total Score\n" + ((Integer)gameHH.getCurrentPlayer().getScore()).toString();
+        mTotalScore.setText(score);
 
         String scoreBoxText = "Brains :" + ((Integer) gameHH.getBrainCounter()).toString() + " Shotguns: " + ((Integer) gameHH.getShotgunCounter()).toString();
         mTurnScoreBox.setText(scoreBoxText);
@@ -161,10 +162,10 @@ public class GameActivityHH extends AppCompatActivity {
                 view.setTextColor(Color.RED);
                 return;
             case "Yellow":
-                view.setTextColor(0xffbdbd00);
+                view.setTextColor(0xff898900);
                 return;
             case "Green":
-                view.setTextColor(0xff00bb00);
+                view.setTextColor(0xff008800);
                 return;
         }
         //for HH game
@@ -173,7 +174,7 @@ public class GameActivityHH extends AppCompatActivity {
                 view.setTextColor(0xffdf61da);
                 return;
             case "Hunk":
-                view.setTextColor(0xff835f09);
+                view.setTextColor(0xff632f00);
         }
     }
 
@@ -261,12 +262,9 @@ public class GameActivityHH extends AppCompatActivity {
                     }
                     case FOOTSTEP: {
                         view.setImageResource(R.drawable.hottie_footsteps);
-                        return;
                     }
                 }
             }
         }
     }
 }
-
-

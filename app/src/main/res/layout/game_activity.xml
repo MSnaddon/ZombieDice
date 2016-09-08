@@ -4,15 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    android:background="@color/game_background">
 
 
-    <TextView
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal">
 
-        android:id="@+id/player_name"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="50sp"
+            android:textAlignment="center"
+            android:typeface="serif"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/player_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="18sp"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:id="@+id/player_score" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,6 +41,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:gravity="center">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/darker_gray"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,9 +57,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:typeface="serif"
+            android:text="@string/next_dice"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_marginTop="30dp"
-            android:text = "Dice Dice Dice"
+            android:text=""
             android:id="@+id/current_dice" />
 
         <RelativeLayout
@@ -45,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/continue_turn"
                 android:id="@+id/continue_turn"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"/>
 
             <Button
@@ -52,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/end_turn_button"
                 android:id="@+id/end_turn"
+                android:layout_toEndOf="@+id/continue_turn"
                 android:layout_toRightOf="@+id/continue_turn"/>
         </RelativeLayout>
 
@@ -59,7 +94,8 @@
             android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Previous Roll"/>
+            android:typeface="serif"
+            android:text="@string/previous_roll"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -67,24 +103,24 @@
             android:layout_gravity="center_horizontal">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_margin="20dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_margin="10dp"
+                android:layout_height="60dp"
                 android:id="@+id/result1"
                 android:layout_toStartOf="@+id/result2"
                 android:layout_toLeftOf="@+id/result2"/>
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_margin="20dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_margin="10dp"
+                android:layout_height="60dp"
                 android:id="@+id/result2"
                 android:layout_centerHorizontal="true" />
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_margin="20dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_margin="10dp"
+                android:layout_height="60dp"
                 android:id="@+id/result3"
                 android:layout_toEndOf="@+id/result2"
                 android:layout_toRightOf="@+id/result2" />

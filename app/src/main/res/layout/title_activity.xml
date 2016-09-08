@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/titleBackground">
+    android:background="@drawable/title_background">
 
     <LinearLayout
         android:layout_width="422dp"
         android:layout_height="wrap_content"
         android:gravity="center">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/splashImage"
             android:src="@drawable/splash"/>
@@ -26,6 +26,8 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/textbox_white"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/numberOfPlayers"
@@ -53,4 +55,5 @@
             android:layout_toEndOf="@id/start_vanilla"
             android:layout_toRightOf="@id/start_vanilla"/>
     </RelativeLayout>
+
 </LinearLayout>
